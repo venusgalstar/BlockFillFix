@@ -85,12 +85,11 @@ function FixClient(host, port, fixVersion, dictionary, senderCompID, targetCompI
         var socket = net.createConnection(port, host);
         socket.setNoDelay(true);
         self.socket = socket;
-
+        
         var fixDataProcessor = new FixDataProcessor(fixVersion);
 
         // Handle Incoming Fix message Event
         fixDataProcessor.on('msg', function(fixmsg) {
-            console.log("msg");
             // Decode Fix plain text message to Fix Object
             var fix = fixCoder.decode(fixmsg);
             // Process incoming Fix message in Session

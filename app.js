@@ -177,12 +177,37 @@ var _loadComponents = function(protocol_data, components) {
 }
 
 getDictionary("fix.4.4", function(err, dic){
-    client = new FixClient("localhost", 8808, "FIX.4.4", dic, "TARGER", "SENDER", {"outgoingSeqNum":"100"});
-
+    client = new FixClient("fixuat.blockfills.com", 62481, "FIX.4.4", dic, "comp_id: ", "BLOCKFILLS", {"outgoingSeqNum":"1"});
     client.createConnection(function(error, client){
-        client.sendLogon({"554":"123456"});
-        client.sendMsg({"35":"V"},function(msg){
+        client.sendLogon({"553":"user", "554":"password", "108":30});
+        client.sendMsg({"35":"0"}, function(msg){});
+        // Showing Market List
+        //client.sendMsg({"35":"x", "320":1, "559":4}, function(msg){console.log(msg);});
+
+        // Send to view Feed
+        /*
+        client.sendMsg({"35":"V", "262":"1", "263":"1", "266":"N", "267":2, "269":"1", "146":[{"55":"ETH/USD"}]}, function(msg){
+            console.log(msg);
         });
+        */
+
+        setInterval(function() {
+            client.sendMsg({"35":"0"}, function(msg){});
+        }, 30000);
+        
+        // Send Order
+        /*
+        client.sendMsg({"35":"D", "11":"3", "60":"20231231-06:17:34.379", "54":"2", "55":"ETH/USD", "38":"0.001", "40":"1", "59":"3"}, function(msg){
+            console.log(msg);
+        });
+        */
+
+        // Cancel Order
+        /*
+        client.sendMsg({"35":"F", "11":"2", "60":"20231231-03:17:34.379", "41":"3", "55":"ETH/USD"}, function(msg){
+            console.log(msg);
+        });
+        */
     });
 });
 

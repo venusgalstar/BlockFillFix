@@ -41,11 +41,16 @@ function FixClientSession(fixVersion, senderCompID, targetCompID, opt) {
 
     self.standardMessage = {
         "Logoff": { 35: "5" },
-        "Logon": { 35: "A", 98: '0' },
+        "Logon": { 35: "A" },
         "Heartbeat": { 35: '0' },
-        "TestRequest": { 35: '1'},
-        "SequenceReset": { 35: '4'},
-        "ResendRequest": { 35: '2'}
+        "ExecutionReport": { 35: '8'},
+        "NewOrder": { 35: 'D'},
+        "CancelOrder": { 35: 'F'},
+        "MarketDataRequest": { 35: 'V'},
+        "MarketDataSnapshot": { 35: 'W'},
+        "MarketDataRequestReject": { 35: 'Y'},
+        "SecurityListDefRequest": { 35: 'x'},
+        "SecurityListDefResponse": { 35: 'y'},
     }
     /*
         "Logoff": { 35: "5" },
@@ -112,9 +117,7 @@ function FixClientSession(fixVersion, senderCompID, targetCompID, opt) {
                     self.options.outgoingSeqNum = 1;
             }
         }
-        self.sendMsg(msgLogon, function(msg) {
-            
-        });
+        self.sendMsg(msgLogon, function(msg) {});
     }
 
     //[PUBLIC] Sends logoff FIX json to counter party
@@ -164,6 +167,10 @@ function FixClientSession(fixVersion, senderCompID, targetCompID, opt) {
         var heartbeatInMilliSeconds = self.options.defaultHeartbeatSeconds * 1000;
         self.timeOfLastIncoming = new Date().getTime();
         self._sendState({ timeOfLastIncoming: self.timeOfLastIncoming });
+
+        // Printing Feed data
+        console.log("Received Data:");
+        console.log(fix);
 
         // ########### Private Methods ###########
         var heartbeat = function() {
@@ -301,6 +308,8 @@ function FixClientSession(fixVersion, senderCompID, targetCompID, opt) {
             self._sendState({ incomingSeqNum: self.options.incomingSeqNum });
 
             self.heartbeatIntervalID = setInterval(heartbeat, heartbeatInMilliSeconds);
+
+            console.log("logged on status: " + self.isLoggedIn);
         }
 
         var result = checkSequenceNumber(fix);
