@@ -182,9 +182,9 @@ var _loadComponents = function(protocol_data, components) {
 global.fixValues = [];
 
 getDictionary("fix.4.4", function(err, dic){
-    client = new FixClient("fixuat.blockfills.com", 62481, "FIX.4.4", dic, "SPDY_SWISS_ALPHA_UAT", "BLOCKFILLS", {"outgoingSeqNum":"1"});
+    client = new FixClient("fixuat.blockfills.com", 62481, "FIX.4.4", dic, "COMP_ID", "BLOCKFILLS", {"outgoingSeqNum":"1"});
     client.createConnection(function(error, client){
-        client.sendLogon({"553":"spdyswiss", "554":"spdyswiss", "108":30});
+        client.sendLogon({"553":"user", "554":"password", "108":30});
         client.sendMsg({"35":"0"}, function(msg){});
         // Showing Market List
         //client.sendMsg({"35":"x", "320":1, "559":4}, function(msg){console.log(msg);});
