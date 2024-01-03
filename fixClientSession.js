@@ -169,8 +169,9 @@ function FixClientSession(fixVersion, senderCompID, targetCompID, opt) {
         self._sendState({ timeOfLastIncoming: self.timeOfLastIncoming });
 
         // Printing Feed data
-        console.log("Received Data:");
-        console.log(fix);
+        //console.log("Received Data:");
+        //console.log(fix);
+        global.fixValues[fix['55']] = fix['268'];
 
         // ########### Private Methods ###########
         var heartbeat = function() {

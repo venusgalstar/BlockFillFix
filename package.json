@@ -4,18 +4,24 @@
   "description": "Node Fix",
   "main": "index.js",
   "dependencies": {
+    "cors": "^2.8.5",
     "dict": "~1.4.0",
+    "express": "^4.18.2",
     "moment": "~2.18.1",
-    "underscore": "~1.8.3",
     "queue": "~4.2.1",
-    "request": "~2.81.0"
+    "request": "~2.81.0",
+    "underscore": "~1.8.3"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/slixin/nodeFix.git"
   },
   "devDependencies": {},
-  "scripts": {},
+  "scripts": {
+    "start": "node ./app.js",
+    "dev": "nodemon ./app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "author": "Steve Li",
   "license": "ISC"
 }
